@@ -1,0 +1,7 @@
+# -*- encoding: utf-8 -*-
+
+CONSUMER_KEY = 'consumer key here'
+CONSUMER_SECRET = 'cousumer secret here'
+ACCESS_TOKEN = 'access token here'
+ACCESS_TOKEN_SECRET = 'access token secret here'
+

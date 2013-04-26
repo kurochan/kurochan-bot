@@ -1,2 +1,3 @@
-MY_NAME = "くろちゃん"
+BOT_NAME = 'kurochan_bot'
+MY_NAME = 'くろちゃん'
 

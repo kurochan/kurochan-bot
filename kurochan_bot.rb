@@ -1,16 +1,10 @@
 # -*- encoding: utf-8 -*-
+require File.expand_path('../twitter_bot', __FILE__);
 
-require 'rubygems'
-require 'twitter'
-
-require File.expand_path('../config/account_config', __FILE__);
-
-Twitter.configure do |config|
-  config.consumer_key       = CONSUMER_KEY
-  config.consumer_secret    = CONSUMER_SECRET
-  config.oauth_token        = ACCESS_TOKEN
-  config.oauth_token_secret = ACCESS_TOKEN_SECRET
+class KurochanBot < TwitterBot
+   def initialize
+      super
+      @client.update('hello')
+   end
 end
-
-Twitter.update('Hello World!')
 

@@ -29,7 +29,11 @@ class TwitterBot
   end
 
   def update(msg)
-    @client.update(msg)
+    if defined? DEBUG && DEBUG
+      puts msg
+    else
+      @client.update(msg)
+    end
   end
 end
 

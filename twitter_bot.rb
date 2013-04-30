@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 require 'twitter'
 require 'clockwork'
-require File.expand_path('../config/account_config', __FILE__);
+require "#{BOT_ROOT}/config/account_config"
 
 class TwitterBot
   include Clockwork

@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../twitter_bot', __FILE__);
+require "#{BOT_ROOT}/twitter_bot"
 
 class KurochanBot < TwitterBot
   def initialize

@@ -13,7 +13,13 @@ class TwitterBot
       :oauth_token => ACCESS_TOKEN,
       :oauth_token_secret => ACCESS_TOKEN_SECRET
     )
+    @timeline = []
+    @timeline_since = 1
+    @reply = []
+    @reply_since = 1
+    
     job :intval => 3.seconds, :func => :hello
+
   end
 
   def job(param = {})
@@ -26,6 +32,24 @@ class TwitterBot
 
   def hello
     puts "hello"
+  end
+
+  def update_timeline
+    @timeline = @client.home_timeline :count => 200, :since_id => @timeline_since
+    dump_statuses(@timeline)
+  end
+
+  def update_reply
+    @reply = @client.mentions_timeline :count => 200, :since_id => @reply_since
+    dump_statuses(@reply)
+  end
+
+  def dump_statuses(statuses)
+    statuses.each do |status|
+      puts "--------------------------------"
+      puts "@#{status['user']['screen_name']}(#{status['user']['name']}) at #{status['created_at']}"
+      puts "#{status['text']}"
+    end
   end
 
   def update(msg)

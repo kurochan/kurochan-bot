@@ -13,12 +13,14 @@ class TwitterBot
       :oauth_token => ACCESS_TOKEN,
       :oauth_token_secret => ACCESS_TOKEN_SECRET
     )
-    job(3.seconds, :hello)
+    job :intval => 3.seconds, :func => :hello
   end
 
-  def job(intval, func)
-    every(intval, func.to_s) do
-      self.send(func)
+  def job(param = {})
+    return unless param[:intval] && param[:func]
+
+    every(param[:intval], param[:func].to_s) do
+      self.send(param[:func])
     end
   end
 

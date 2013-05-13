@@ -7,6 +7,6 @@ PLUGIN_ROOT = "#{BOT_ROOT}/plugin"
 CONFIG_ROOT = "#{BOT_ROOT}/config"
 
 require "#{CONFIG_ROOT}/environment"
-require "#{PLUGIN_ROOT}/#{BOT_NAME}"
+require "#{BOT_ROOT}/#{BOT_NAME}"
 
 @bot = BOT_NAME.classify.constantize.new

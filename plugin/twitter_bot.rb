@@ -17,9 +17,6 @@ class TwitterBot
     @timeline_since = 1
     @reply = []
     @reply_since = 1
-
-    job :intval => 3.seconds, :func => :hello
-
   end
 
   def job(param = {})

@@ -50,7 +50,7 @@ class TwitterBot
   end
 
   def update(msg)
-    if defined? DEBUG && DEBUG
+    if ((defined? DEBUG) && DEBUG)
       puts msg
     else
       @client.update(msg)

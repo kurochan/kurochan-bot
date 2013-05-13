@@ -3,9 +3,10 @@ require 'rubygems'
 require 'active_support/all'
 
 BOT_ROOT = File.expand_path('../', __FILE__)
+PLUGIN_ROOT = "#{BOT_ROOT}/plugin"
+CONFIG_ROOT = "#{BOT_ROOT}/config"
 
-require "#{BOT_ROOT}/config/environment"
-require "#{BOT_ROOT}/plugin/#{BOT_NAME}"
+require "#{CONFIG_ROOT}/environment"
+require "#{PLUGIN_ROOT}/#{BOT_NAME}"
 
 @bot = BOT_NAME.classify.constantize.new
-

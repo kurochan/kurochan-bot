@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 require 'twitter'
 require 'clockwork'
-require "#{BOT_ROOT}/config/account_config"
+require "#{CONFIG_ROOT}/account_config"
 
 class TwitterBot
   include Clockwork

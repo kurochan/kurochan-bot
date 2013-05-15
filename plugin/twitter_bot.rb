@@ -19,6 +19,10 @@ class TwitterBot
     @reply_since = 1
   end
 
+  def require_plugin(name)
+    require "#{PLUGIN_ROOT}/#{name}"
+  end
+
   def job(param = {})
     return unless param[:intval] && param[:func]
 

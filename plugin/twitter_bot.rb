@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 require 'twitter'
 require 'clockwork'
-require "#{CONFIG_ROOT}/account_config"
 
 class TwitterBot
   include Clockwork
@@ -17,6 +16,9 @@ class TwitterBot
     @timeline_since = 1
     @reply = []
     @reply_since = 1
+
+    uri = URI.parse(REDIS_URI)
+    @redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
   end
 
   def require_plugin(name)

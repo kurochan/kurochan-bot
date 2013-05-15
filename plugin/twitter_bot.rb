@@ -35,12 +35,12 @@ class TwitterBot
     puts "hello"
   end
 
-  def update_timeline
+  def get_timeline
     @timeline = @client.home_timeline :count => 200, :since_id => @timeline_since
     dump_statuses(@timeline)
   end
 
-  def update_reply
+  def get_reply
     @reply = @client.mentions_timeline :count => 200, :since_id => @reply_since
     dump_statuses(@reply)
   end

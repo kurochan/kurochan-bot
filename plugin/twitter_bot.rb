@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 require 'twitter'
 require 'clockwork'
+require 'redis'
 
 class TwitterBot
   include Clockwork

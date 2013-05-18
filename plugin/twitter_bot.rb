@@ -6,6 +6,9 @@ class TwitterBot
   include Clockwork
 
   def initialize
+    uri = URI.parse(REDIS_URI)
+    @redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+
     @client = Twitter::Client.new(
       :consumer_key => CONSUMER_KEY,
       :consumer_secret => CONSUMER_SECRET,
@@ -16,9 +19,6 @@ class TwitterBot
     @timeline_since = 1
     @reply = []
     @reply_since = 1
-
-    uri = URI.parse(REDIS_URI)
-    @redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
   end
 
   def require_plugin(name)

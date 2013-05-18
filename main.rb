@@ -6,8 +6,7 @@ BOT_ROOT = File.expand_path('../', __FILE__)
 PLUGIN_ROOT = "#{BOT_ROOT}/plugin"
 CONFIG_ROOT = "#{BOT_ROOT}/config"
 
-require "#{CONFIG_ROOT}/environment"
-require "#{CONFIG_ROOT}/account_config"
+require "#{CONFIG_ROOT}/config"
 require "#{PLUGIN_ROOT}/twitter_bot"
 require "#{BOT_ROOT}/#{BOT_NAME}"
 

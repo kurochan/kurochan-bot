@@ -6,6 +6,7 @@ require 'redis'
 class TwitterBot
   include Clockwork
 
+  attr_reader :redis
   def initialize
     uri = URI.parse(REDIS_URI)
     @redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)

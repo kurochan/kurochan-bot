@@ -5,6 +5,10 @@ class KurochanBot < TwitterBot
     super
     job :intval => 3.seconds, :func => :hello
     job :intval => 5.minutes, :func => :normal_task
+    init_task
+  end
+
+  def init_task
   end
 
   def normal_task

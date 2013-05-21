@@ -25,6 +25,7 @@ class TwitterBot
 
   def require_plugin(name)
     require "#{PLUGIN_ROOT}/#{name}"
+    self.extend name.classify.constantize
   end
 
   def job(param = {})

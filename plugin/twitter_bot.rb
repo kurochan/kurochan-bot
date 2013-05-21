@@ -64,4 +64,14 @@ class TwitterBot
       @client.update(msg)
     end
   end
+
+  def deploy_time
+    time = redis.get('deploy_time').to_i
+    time = 1 if time <= 0
+    return time
+  end
+
+  def deploy_time=(time)
+    redis.set('deploy_time', time)
+  end
 end

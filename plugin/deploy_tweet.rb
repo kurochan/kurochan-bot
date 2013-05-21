@@ -1,6 +1,6 @@
 module DeployTweet
   def deploy_tweet
-    update "deploy! version #{self.deploy_time}!"
+    update "version #{self.deploy_time} deployed!"
     self.deploy_time += 1
   end
 end

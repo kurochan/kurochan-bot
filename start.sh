@@ -1,2 +1,2 @@
 #!/bin/sh
-clockwork main.rb
+foreman start

@@ -79,8 +79,13 @@ class TwitterBot
 
   def revision
     return 0 if (!(defined? HEROKU_API_KEY) || HEROKU_API_KEY == '' || !HEROKU_API_KEY)
-    api = Heroku::API.new(:api_key => HEROKU_API_KEY)
-    releases = api.get_releases 'kurochan-bot'
-    releases.data[:body][-1]['name'][-1, 1].to_i
+    begin
+      api = Heroku::API.new(:api_key => HEROKU_API_KEY)
+      releases = api.get_releases 'kurochan-bot'
+      releases.data[:body][-1]['name'][-1, 1].to_i
+    rescue
+      puts 'ERROR Cannot access heroku.'
+      return 0
+    end
   end
 end

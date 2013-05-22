@@ -10,7 +10,11 @@ class KurochanBot < TwitterBot
   end
 
   def init_task
-    deploy_tweet
+    rev = revision
+    unless rev == deploy_time
+      deploy_tweet
+      deploy_time = rev
+    end
   end
 
   def normal_task

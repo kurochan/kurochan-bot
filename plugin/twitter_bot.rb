@@ -78,7 +78,7 @@ class TwitterBot
   end
 
   def revision
-    return 0 if (!(defined? HEROKU_API_KEY) || HEROKU_API_KEY == '')
+    return 0 if (!(defined? HEROKU_API_KEY) || HEROKU_API_KEY == '' || !HEROKU_API_KEY)
     api = Heroku::API.new(:api_key => HEROKU_API_KEY)
     releases = api.get_releases 'kurochan-bot'
     releases.data[:body][-1]['name'][-1, 1].to_i

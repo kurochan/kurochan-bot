@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 gem 'i18n'
-gem 'system_timer'
 gem 'active_support'
 gem 'twitter'
 gem 'clockwork'

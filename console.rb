@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-
 require "irb"
 require "pp"
 require "main"

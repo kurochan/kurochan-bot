@@ -5,7 +5,7 @@ module HerokuHelper
     begin
       api = Heroku::API.new(:api_key => HEROKU_API_KEY)
       releases = api.get_releases HEROKU_REPO_NAME
-      releases.data[:body][-1]['name'][-1, 1].to_i
+      releases.data[:body][-1]['name'].delete('v').to_i
     rescue
       puts 'ERROR Cannot access heroku.'
       return 0

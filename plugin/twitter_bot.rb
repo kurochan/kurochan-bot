@@ -32,7 +32,7 @@ class TwitterBot
   def job(param = {})
     return unless param[:intval] && param[:func]
 
-    every(param[:intval], param[:func].to_s, :at => param[:at]) do
+    every(param[:intval], param[:func].to_s, :at => param[:at] ? param[:at].to_s : nil) do
       self.send(param[:func])
     end
   end

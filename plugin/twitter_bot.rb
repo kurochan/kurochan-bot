@@ -53,10 +53,14 @@ class TwitterBot
 
   def dump_statuses(statuses)
     statuses.each do |status|
-      puts "--------------------------------"
-      puts "@#{status['user']['screen_name']}(#{status['user']['name']}) at #{status['created_at']}"
-      puts "#{status['text']}"
+      dump_status status
     end
+  end
+
+  def dump_status(status)
+    puts "--------------------------------"
+    puts "@#{status['user']['screen_name']}(#{status['user']['name']}) at #{status['created_at']}"
+    puts "#{status['text']}"
   end
 
   def update(msg)

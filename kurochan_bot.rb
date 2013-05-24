@@ -12,7 +12,7 @@ class KurochanBot < TwitterBot
   end
 
   def init_task
-    rev = heroku_revision
+    rev = heroku_revision || 0
     unless rev == deploy_time
       deploy_tweet rev
       self.deploy_time = rev

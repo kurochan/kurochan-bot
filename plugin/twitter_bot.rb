@@ -24,9 +24,7 @@ class TwitterBot
     @reply = []
     @reply_since = 1
     init_stream
-    t = Thread.new do
-      user_stream
-    end
+    user_stream
   end
 
   def require_plugin(name)
@@ -68,17 +66,19 @@ class TwitterBot
 
   private
   def user_stream
-    loop do
-      @user_stream = UserStream.client
-      begin
-        @user_stream.user do |status|
-          puts status.text
+    t = Thread.new do
+      loop do
+        @user_stream = UserStream.client
+        begin
+          @user_stream.user do |status|
+            puts status.text
+          end
+        rescue  Timeout::Error
+          puts '[UserStream] Timeout ERROR retry...'
         end
-      rescue  Timeout::Error
-        puts '[UserStream] Timeout ERROR retry...'
       end
+      sleep 10
     end
-    sleep 10
   end
 
   def dump_statuses(statuses)

@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 require 'twitter'
+require 'userstream'
 require 'clockwork'
 require 'redis'
 require 'heroku-api'
@@ -22,6 +23,10 @@ class TwitterBot
     @timeline_since = 1
     @reply = []
     @reply_since = 1
+    init_stream
+    t = Thread.new do
+      user_stream
+    end
   end
 
   def require_plugin(name)
@@ -49,6 +54,31 @@ class TwitterBot
   def get_reply
     @reply = @client.mentions_timeline :count => 200, :since_id => @reply_since
     dump_statuses(@reply)
+  end
+
+  private
+  def init_stream
+    UserStream.configure do |config|
+      config.consumer_key = CONSUMER_KEY
+      config.consumer_secret = CONSUMER_SECRET
+      config.oauth_token = ACCESS_TOKEN
+      config.oauth_token_secret = ACCESS_TOKEN_SECRET
+    end
+  end
+
+  private
+  def user_stream
+    loop do
+      @user_stream = UserStream.client
+      begin
+        @user_stream.user do |status|
+          puts status.text
+        end
+      rescue  Timeout::Error
+        puts '[UserStream] Timeout ERROR retry...'
+      end
+    end
+    sleep 10
   end
 
   def dump_statuses(statuses)

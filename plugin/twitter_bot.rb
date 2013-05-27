@@ -71,7 +71,7 @@ class TwitterBot
         @user_stream = UserStream.client
         begin
           @user_stream.user do |status|
-            on_status status
+            before_on_status status
           end
         rescue  Timeout::Error
           puts '[UserStream] Timeout ERROR retry...'
@@ -81,7 +81,21 @@ class TwitterBot
     end
   end
 
+  private
+  def before_on_status(status)
+    @redis.lpush('twitter:status_id', status.id) if status.text
+    @redis.hmset("twitter:status:#{status.id}",
+                 'user_name', status.user.name,
+                 'user_id', status.user.id,
+                 'text', status.text,
+                 'in_reply_to_status_id', status.in_reply_to_status_id,
+                 'created_at', status.created_at
+                ) if status.text
+    on_status status
+  end
+
   def on_status(status)
+    puts status.text
   end
 
   def dump_statuses(statuses)
@@ -105,12 +119,12 @@ class TwitterBot
   end
 
   def deploy_time
-    time = redis.get('deploy_time').to_i
+    time = redis.get('twitter:deploy_time').to_i
     time = 1 if time <= 0
     return time
   end
 
   def deploy_time=(time)
-    redis.set('deploy_time', time)
+    redis.set('twitter:deploy_time', time)
   end
 end

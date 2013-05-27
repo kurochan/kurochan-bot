@@ -71,7 +71,7 @@ class TwitterBot
         @user_stream = UserStream.client
         begin
           @user_stream.user do |status|
-            puts status.text
+            on_status status
           end
         rescue  Timeout::Error
           puts '[UserStream] Timeout ERROR retry...'
@@ -79,6 +79,9 @@ class TwitterBot
       end
       sleep 10
     end
+  end
+
+  def on_status(status)
   end
 
   def dump_statuses(statuses)

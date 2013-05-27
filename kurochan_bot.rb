@@ -6,7 +6,7 @@ class KurochanBot < TwitterBot
     require_plugin 'heroku_helper'
     require_plugin 'yoruho'
     init_task
-    job :intval => 3.seconds, :func => :hello
+    # job :intval => 3.seconds, :func => :hello
     job :intval => 5.minutes, :func => :normal_task
     job :intval => 1.day, :func => :yoruho, :at => '00:00'
   end

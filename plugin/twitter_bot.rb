@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 require 'twitter'
+require 'userstream'
 require 'clockwork'
 require 'redis'
 require 'heroku-api'
@@ -22,6 +23,8 @@ class TwitterBot
     @timeline_since = 1
     @reply = []
     @reply_since = 1
+    init_stream
+    user_stream
   end
 
   def require_plugin(name)
@@ -51,6 +54,50 @@ class TwitterBot
     dump_statuses(@reply)
   end
 
+  private
+  def init_stream
+    UserStream.configure do |config|
+      config.consumer_key = CONSUMER_KEY
+      config.consumer_secret = CONSUMER_SECRET
+      config.oauth_token = ACCESS_TOKEN
+      config.oauth_token_secret = ACCESS_TOKEN_SECRET
+    end
+  end
+
+  private
+  def user_stream
+    t = Thread.new do
+      loop do
+        @user_stream = UserStream.client
+        begin
+          @user_stream.user do |status|
+            before_on_status status
+          end
+        rescue  Timeout::Error
+          puts '[UserStream] Timeout ERROR retry...'
+        end
+      end
+      sleep 10
+    end
+  end
+
+  private
+  def before_on_status(status)
+    @redis.lpush('twitter:status_id', status.id) if status.text
+    @redis.hmset("twitter:status:#{status.id}",
+                 'user_name', status.user.name,
+                 'user_id', status.user.id,
+                 'text', status.text,
+                 'in_reply_to_status_id', status.in_reply_to_status_id,
+                 'created_at', status.created_at
+                ) if status.text
+    on_status status
+  end
+
+  def on_status(status)
+    puts status.text
+  end
+
   def dump_statuses(statuses)
     statuses.each do |status|
       dump_status status
@@ -72,12 +119,12 @@ class TwitterBot
   end
 
   def deploy_time
-    time = redis.get('deploy_time').to_i
+    time = redis.get('twitter:deploy_time').to_i
     time = 1 if time <= 0
     return time
   end
 
   def deploy_time=(time)
-    redis.set('deploy_time', time)
+    redis.set('twitter:deploy_time', time)
   end
 end

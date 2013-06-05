@@ -111,11 +111,8 @@ class TwitterBot
   end
 
   def update(msg)
-    if ((defined? DEBUG) && DEBUG)
-      puts msg
-    else
-      @client.update(msg)
-    end
+    (defined? DEBUG) && DEBUG ?  puts msg : @client.update(msg)
+    return msg
   end
 
   def deploy_time

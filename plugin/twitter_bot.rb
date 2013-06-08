@@ -95,7 +95,7 @@ class TwitterBot
   end
 
   def on_status(status)
-    puts status.text
+    pp status
   end
 
   def dump_statuses(statuses)
@@ -111,7 +111,7 @@ class TwitterBot
   end
 
   def update(msg)
-    (defined? DEBUG) && DEBUG ?  puts msg : @client.update(msg)
+    (defined? DEBUG) && DEBUG ?  puts(msg) : @client.update(msg)
     return msg
   end
 

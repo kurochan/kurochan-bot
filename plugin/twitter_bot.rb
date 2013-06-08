@@ -87,15 +87,17 @@ class TwitterBot
     @redis.hmset("twitter:status:#{status.id}",
                  'user_name', status.user.name,
                  'user_id', status.user.id,
+                 'screen_name', status.user.screen_name,
                  'text', status.text,
                  'in_reply_to_status_id', status.in_reply_to_status_id,
                  'created_at', status.created_at
                 ) if status.text
+    @redis.sadd('twitter:delete', status[:delete].status.id) if status[:delete]
     on_status status
   end
 
   def on_status(status)
-    pp status
+    puts status.text
   end
 
   def dump_statuses(statuses)

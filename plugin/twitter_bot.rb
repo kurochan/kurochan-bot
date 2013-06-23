@@ -97,7 +97,7 @@ class TwitterBot
   end
 
   def on_status(status)
-    puts status.text
+    # on status hook
   end
 
   def dump_statuses(statuses)

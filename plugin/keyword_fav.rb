@@ -4,6 +4,10 @@ module KeywordFav
     return unless status.text
     data = [
       'くろちゃん',
+      '卓同',
+      '詰み',
+      'クソネミ',
+      'ｸｿﾈﾐ',
       '#先輩いない',
     ]
     data.each do |str|

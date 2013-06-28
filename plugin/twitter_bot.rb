@@ -117,6 +117,11 @@ class TwitterBot
     return msg
   end
 
+  def favorite(status)
+    return unless status.text
+    (defined? DEBUG) && DEBUG ?  puts('favorite: ' + status.text) : @client.favorite(status.id)
+  end
+
   def deploy_time
     time = redis.get('twitter:deploy_time').to_i
     time = 1 if time <= 0

@@ -21,4 +21,7 @@ class KurochanBot < TwitterBot
 
   def normal_task
   end
+
+  def on_status(status)
+  end
 end

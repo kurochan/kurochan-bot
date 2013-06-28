@@ -7,8 +7,7 @@ module KeywordFav
       '#先輩いない',
     ]
     data.each do |str|
-      puts str.include? status.text
-      if str.include? status.text
+      if status.text.include? str
         favorite status
         break
       end

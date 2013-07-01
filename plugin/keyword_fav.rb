@@ -9,7 +9,7 @@ module KeywordFav
       '詰ん',
       'クソネミ',
       'ｸｿﾈﾐ',
-      '#先輩いない',
+      '先輩',
     ]
     data.each do |str|
       if status.text.include? str

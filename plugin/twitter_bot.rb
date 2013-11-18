@@ -87,15 +87,17 @@ class TwitterBot
     @redis.hmset("twitter:status:#{status.id}",
                  'user_name', status.user.name,
                  'user_id', status.user.id,
+                 'screen_name', status.user.screen_name,
                  'text', status.text,
                  'in_reply_to_status_id', status.in_reply_to_status_id,
                  'created_at', status.created_at
                 ) if status.text
+    @redis.lpush('twitter:delete_id', status[:delete].status.id) if status[:delete]
     on_status status
   end
 
   def on_status(status)
-    puts status.text
+    # on status hook
   end
 
   def dump_statuses(statuses)
@@ -111,11 +113,13 @@ class TwitterBot
   end
 
   def update(msg)
-    if ((defined? DEBUG) && DEBUG)
-      puts msg
-    else
-      @client.update(msg)
-    end
+    (defined? DEBUG) && DEBUG ?  puts(msg) : @client.update(msg)
+    return msg
+  end
+
+  def favorite(status)
+    return unless status.text
+    (defined? DEBUG) && DEBUG ?  puts('favorite: ' + status.text) : @client.favorite(status.id)
   end
 
   def deploy_time

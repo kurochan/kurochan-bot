@@ -3,6 +3,7 @@ DEBUG = true
 BOT_NAME = 'kurochan_bot'
 HEROKU_REPO_NAME = 'heroku repository name'
 MY_NAME = 'くろちゃん'
+MY_ID = 'my id'
 CONSUMER_KEY = 'consumer key here'
 CONSUMER_SECRET = 'cousumer secret here'
 ACCESS_TOKEN = 'access token here'

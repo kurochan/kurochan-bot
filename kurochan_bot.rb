@@ -5,6 +5,7 @@ class KurochanBot < TwitterBot
     require_plugin 'deploy_tweet'
     require_plugin 'heroku_helper'
     require_plugin 'yoruho'
+    require_plugin 'keyword_fav'
     init_task
     # job :intval => 3.seconds, :func => :hello
     job :intval => 5.minutes, :func => :normal_task
@@ -20,5 +21,9 @@ class KurochanBot < TwitterBot
   end
 
   def normal_task
+  end
+
+  def on_status(status)
+    keyword_fav status
   end
 end

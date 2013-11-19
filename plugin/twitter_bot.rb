@@ -96,12 +96,12 @@ class TwitterBot
                    'in_reply_to_status_id', status.in_reply_to_status_id,
                    'created_at', status.created_at
                 ) if status.text
-                @redis.lpush('twitter:delete_id', status[:delete].status.id) if status[:delete]
-                if reply? status
-                  on_reply_status status
-                else
-                  on_status status
-                end
+    @redis.lpush('twitter:delete_id', status[:delete].status.id) if status[:delete]
+    if reply? status
+      on_reply_status status
+    else
+      on_status status
+    end
   end
 
   private

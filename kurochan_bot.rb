@@ -2,9 +2,9 @@
 class KurochanBot < TwitterBot
   def initialize
     super
+    require_plugin 'reply'
     require_plugin 'deploy_tweet'
     require_plugin 'heroku_helper'
-    require_plugin 'reply'
     require_plugin 'yoruho'
     require_plugin 'keyword_fav'
     init_task

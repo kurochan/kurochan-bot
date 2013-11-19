@@ -66,19 +66,23 @@ class TwitterBot
 
   private
   def user_stream
-    t = Thread.new do
+    thread = Thread.new do
       loop do
-        @user_stream = UserStream.client
-        begin
-          @user_stream.user do |status|
-            before_on_status status
+        t = Thread.new do
+          @user_stream = UserStream.client
+          begin
+            @user_stream.user do |status|
+              before_on_status status
+            end
+          rescue  Timeout::Error
+            puts '[UserStream] Timeout ERROR retry...'
           end
-        rescue  Timeout::Error
-          puts '[UserStream] Timeout ERROR retry...'
         end
+        t.join
+        sleep 10
       end
-      sleep 10
     end
+    # thread.join
   end
 
   private
@@ -86,18 +90,18 @@ class TwitterBot
     @redis.lpush('twitter:status_id', status.id) if status.text
     @redis.hmset("twitter:status:#{status.id}",
                  'user_name', status.user.name,
-                 'user_id', status.user.id,
-                 'screen_name', status.user.screen_name,
-                 'text', status.text,
-                 'in_reply_to_status_id', status.in_reply_to_status_id,
-                 'created_at', status.created_at
+                   'user_id', status.user.id,
+                   'screen_name', status.user.screen_name,
+                   'text', status.text,
+                   'in_reply_to_status_id', status.in_reply_to_status_id,
+                   'created_at', status.created_at
                 ) if status.text
-    @redis.lpush('twitter:delete_id', status[:delete].status.id) if status[:delete]
-    if reply? status
-      on_reply_status status
-    else
-      on_status status
-    end
+                @redis.lpush('twitter:delete_id', status[:delete].status.id) if status[:delete]
+                if reply? status
+                  on_reply_status status
+                else
+                  on_status status
+                end
   end
 
   private

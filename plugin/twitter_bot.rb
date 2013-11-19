@@ -93,10 +93,25 @@ class TwitterBot
                  'created_at', status.created_at
                 ) if status.text
     @redis.lpush('twitter:delete_id', status[:delete].status.id) if status[:delete]
-    on_status status
+    if reply? status
+      on_reply_status status
+    else
+      on_status status
+    end
+  end
+
+  private
+  def reply?(status)
+    status && 
+      status.in_reply_to_screen_name.kind_of?(String) &&
+      (status.in_reply_to_screen_name.downcase == MY_ID.downcase)
   end
 
   def on_status(status)
+    # on status hook
+  end
+
+  def on_reply_status(status)
     # on status hook
   end
 

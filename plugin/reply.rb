@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-module DefaultReply
+module Reply
   def default_reply
     update [
       'と思うじゃん？',

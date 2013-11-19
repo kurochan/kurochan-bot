@@ -24,6 +24,6 @@ class KurochanBot < TwitterBot
   end
 
   def on_status(status)
-    keyword_fav status
+    # keyword_fav status
   end
 end

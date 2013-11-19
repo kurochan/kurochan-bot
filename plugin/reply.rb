@@ -6,7 +6,6 @@ require 'net/http'
 
 module Reply
   def default_reply(status)
-    puts "!#{status.text}"
     status.text = status.text.gsub(/@[A-z0-9_]+/, '').strip
     update "@#{status.user.screen_name} #{docomo_dialogue(status.text)}"
   end

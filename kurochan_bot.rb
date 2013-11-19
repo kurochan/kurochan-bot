@@ -29,6 +29,6 @@ class KurochanBot < TwitterBot
   end
 
   def on_reply_status(status)
-    default_reply
+    default_reply status
   end
 end

@@ -4,6 +4,7 @@ class KurochanBot < TwitterBot
     super
     require_plugin 'deploy_tweet'
     require_plugin 'heroku_helper'
+    require_plugin 'reply'
     require_plugin 'yoruho'
     require_plugin 'keyword_fav'
     init_task
@@ -25,5 +26,9 @@ class KurochanBot < TwitterBot
 
   def on_status(status)
     # keyword_fav status
+  end
+
+  def on_reply_status(status)
+    default_reply
   end
 end

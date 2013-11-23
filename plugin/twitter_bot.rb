@@ -136,8 +136,8 @@ class TwitterBot
     puts "#{status['text']}"
   end
 
-  def update(msg)
-    (defined? DEBUG) && DEBUG ?  puts(msg) : @client.update(msg)
+  def update(msg, options = {})
+    (defined? DEBUG) && DEBUG ?  puts(msg) : @client.update(msg, options)
     return msg
   end
 

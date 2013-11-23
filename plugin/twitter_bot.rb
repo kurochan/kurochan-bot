@@ -66,24 +66,28 @@ class TwitterBot
 
   private
   def user_stream
-    crash_count = 0
-    loop do
-      t = Thread.new do
-        @user_stream = UserStream.client
-        @user_stream.user do |status|
-          before_on_status status
+    thread = Thread .new do
+      crash_count = 0
+      loop do
+        puts 'start user stream'
+        t = Thread.new do
+          @user_stream = UserStream.client
+          @user_stream.user do |status|
+            before_on_status status
+          end
         end
-      end
 
-      begin
-        t.join
-      rescue => e
-        crash_count += 1
-        puts e.backtrace
-        puts "[UserStream] ERROR retry... (#{crash_count} times)"
+        begin
+          t.join
+        rescue => e
+          crash_count += 1
+          puts e.backtrace
+          puts "[UserStream] ERROR retry... (#{crash_count} times)"
+        end
+        sleep 5
       end
-      sleep 5
     end
+    # thread.join
   end
 
   private

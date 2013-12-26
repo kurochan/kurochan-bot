@@ -81,6 +81,8 @@ class TwitterBot
           t.join
         rescue => e
           crash_count += 1
+          puts e.class
+          puts e.message
           puts e.backtrace
           puts "[UserStream] ERROR retry... (#{crash_count} times)"
         end

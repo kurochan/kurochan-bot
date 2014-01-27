@@ -16,7 +16,7 @@ module Reply
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     request = Net::HTTP::Post.new(uri.request_uri, {'Content-Type' =>'application/json'})
-    request.body = {utt: str}.to_json
+    request.body = {utt: str, context: MY_ID}.to_json
     response = nil
     http.start do |h|
       resp = h.request(request)

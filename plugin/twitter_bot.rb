@@ -13,7 +13,7 @@ class TwitterBot
     uri = URI.parse(REDIS_URI)
     @redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 
-    @client = Twitter::Client.new(
+    @client = Twitter::REST::Client.new(
       :consumer_key => CONSUMER_KEY,
       :consumer_secret => CONSUMER_SECRET,
       :oauth_token => ACCESS_TOKEN,
